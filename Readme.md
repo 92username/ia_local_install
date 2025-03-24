@@ -1,6 +1,7 @@
 **Rodando uma IA Localmente com GPU NVIDIA de 12GB e CUDA**
 
 ## 1. Requisitos Iniciais
+
 Antes de configurar a IA localmente, certifique-se de ter os seguintes requisitos atendidos:
 - **GPU NVIDIA compatível** (mínimo 12GB de VRAM)
 - **Drivers da NVIDIA atualizados**
@@ -14,6 +15,7 @@ Antes de configurar a IA localmente, certifique-se de ter os seguintes requisito
 ## 2. Instalando os Drivers da NVIDIA e CUDA
 
 ### 2.1 Verificar compatibilidade da GPU
+
 Execute:
 ```bash
 nvidia-smi
@@ -21,10 +23,12 @@ nvidia-smi
 Isso listará as informações da sua GPU, incluindo compatibilidade com CUDA.
 
 ### 2.2 Instalar CUDA Toolkit e cuDNN
+
 Instale as versões mais recentes diretamente do site oficial da NVIDIA:
 - [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads)
 
 ### 2.2.1 CUDA Toolkit Installer
+
 Instruções:
 
 ```
@@ -37,7 +41,28 @@ sudo apt-get update
 sudo apt-get -y install cuda-toolkit-12-8
 ```
 
+Instale os drivers CUDA.  Escolha entre o Open Source, e o proprietário.
+
+```
+sudo apt-get install -y nvidia-open
+```
+
+Ou o proprietário:
+
+```
+sudo apt-get install -y cuda-drivers
+```
+
+### 2.2.2 Instale NVIDIA CUDA® Deep Neural Network library (cuDNN) 
+
+No meu caso, escolhi o frontend, por facilidade de uso e maior abstração.
+
+Consulte:
 - [cuDNN](https://developer.nvidia.com/cudnn)
+
+Para a instalação, siga as instruções do repo:
+
+- [REPO_cuDNN](https://github.com/NVIDIA/cudnn-frontend)
 
 Após instalar, verifique a versão do CUDA:
 ```bash
@@ -47,18 +72,23 @@ nvcc --version
 ---
 
 ## 3. Configurando o Ambiente Python
+
 ### 3.1 Criar um ambiente virtual
+
 ```bash
 python3 -m venv ia_local
 source ia_local/bin/activate
 ```
 
 ### 3.2 Instalar PyTorch ou TensorFlow com suporte a CUDA
+
 #### PyTorch
+
 ```bash
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 ```
 #### TensorFlow
+
 ```bash
 pip install tensorflow==2.15.0
 ```
@@ -74,14 +104,17 @@ Se retornar `True`, sua GPU está funcionando corretamente.
 ---
 
 ## 4. Baixando e Executando um Modelo de IA
+
 Escolha um modelo conforme sua necessidade:
 
 ### 4.1 Modelos de IA Populares
+
 - **LLMs (Modelos de Linguagem):** Llama 2, Mistral, Phi-2, GPTQ
 - **Visão Computacional:** YOLOv8, Stable Diffusion
 - **Voz e Áudio:** Whisper, FastSpeech2
 
 ### 4.2 Baixando um Modelo
+
 Exemplo com **Llama 2** via `llama-cpp-python`:
 ```bash
 pip install llama-cpp-python
@@ -100,9 +133,9 @@ print(llm("Qual é a capital do Brasil?"))
 ---
 
 ## 5. Considerações Finais
+
 - Ajuste a **quantidade de memória VRAM utilizada** com parâmetros como `max_seq_len`.
 - Use **inferência quantizada** para rodar modelos grandes em GPUs com menos memória.
 - Considere usar frameworks como **vLLM** e **Text Generation Web UI** para interfaces amigáveis.
 
-Agora você está pronto para rodar uma IA localmente com sua GPU NVIDIA e CUDA!
 
